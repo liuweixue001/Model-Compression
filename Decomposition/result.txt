@@ -1,0 +1,184 @@
+Files already downloaded and verified
+weights load failed
+Train Epoch: 0 [0/50000 (0%)]	Loss: 2.303802
+
+Test set: Average loss: 0.0206, Accuracy: 5398/10000 (54%)
+
+Train Epoch: 1 [0/50000 (0%)]	Loss: 1.247805
+
+Test set: Average loss: 0.0176, Accuracy: 6054/10000 (61%)
+
+Train Epoch: 2 [0/50000 (0%)]	Loss: 0.978066
+
+Test set: Average loss: 0.0163, Accuracy: 6361/10000 (64%)
+
+Train Epoch: 3 [0/50000 (0%)]	Loss: 0.846047
+
+Test set: Average loss: 0.0156, Accuracy: 6552/10000 (66%)
+
+Train Epoch: 4 [0/50000 (0%)]	Loss: 0.787004
+
+Test set: Average loss: 0.0155, Accuracy: 6536/10000 (65%)
+
+Train Epoch: 5 [0/50000 (0%)]	Loss: 1.095457
+
+Test set: Average loss: 0.0147, Accuracy: 6777/10000 (68%)
+
+Train Epoch: 6 [0/50000 (0%)]	Loss: 0.715162
+
+Test set: Average loss: 0.0144, Accuracy: 6778/10000 (68%)
+
+Train Epoch: 7 [0/50000 (0%)]	Loss: 1.028469
+
+Test set: Average loss: 0.0142, Accuracy: 6943/10000 (69%)
+
+Train Epoch: 8 [0/50000 (0%)]	Loss: 0.584985
+
+Test set: Average loss: 0.0144, Accuracy: 6872/10000 (69%)
+
+Train Epoch: 9 [0/50000 (0%)]	Loss: 0.799062
+
+Test set: Average loss: 0.0135, Accuracy: 7048/10000 (70%)
+
+------------原模型--------------
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 16, 62, 62]             448
+              ReLU-2           [-1, 16, 62, 62]               0
+            Conv2d-3           [-1, 32, 60, 60]           4,640
+              ReLU-4           [-1, 32, 60, 60]               0
+            Conv2d-5           [-1, 64, 58, 58]          18,496
+              ReLU-6           [-1, 64, 58, 58]               0
+ AdaptiveAvgPool2d-7             [-1, 64, 5, 5]               0
+            Linear-8                   [-1, 10]          16,010
+================================================================
+Total params: 39,594
+Trainable params: 39,594
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.05
+Forward/backward pass size (MB): 5.99
+Params size (MB): 0.15
+Estimated Total Size (MB): 6.19
+----------------------------------------------------------------
+------------原模型精度--------------
+
+Test set: Average loss: 0.0135, Accuracy: 7048/10000 (70%)
+
+-----------压缩模型--------------
+old_module = Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1))
+0.040587003574288634
+0.026884839498780785
+Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1)) VBMF Estimated ranks [0, 1]
+this conv_layer failed
+old_module = Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1))
+0.005974591947791354
+0.005944299255205348
+Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1)) VBMF Estimated ranks [12, 8]
+this conv_layer successed
+new_module = Sequential(
+  (0): Conv2d(16, 8, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): Conv2d(8, 12, kernel_size=(3, 3), stride=(1, 1), bias=False)
+  (2): Conv2d(12, 32, kernel_size=(1, 1), stride=(1, 1))
+)
+old_module = Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1))
+0.040587003574288634
+0.026884839498780785
+Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1)) VBMF Estimated ranks [0, 1]
+this conv_layer failed
+old_module = Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1))
+0.0025472792940197065
+0.003006241970214571
+Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1)) VBMF Estimated ranks [24, 18]
+this conv_layer successed
+new_module = Sequential(
+  (0): Conv2d(32, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): Conv2d(18, 24, kernel_size=(3, 3), stride=(1, 1), bias=False)
+  (2): Conv2d(24, 64, kernel_size=(1, 1), stride=(1, 1))
+)
+old_module = Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1))
+0.040587003574288634
+0.026884839498780785
+Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1)) VBMF Estimated ranks [0, 1]
+this conv_layer failed
+old_module = Linear(in_features=1600, out_features=10, bias=True)
+new_module = Sequential(
+  (0): Linear(in_features=5, out_features=1600, bias=False)
+  (1): Linear(in_features=10, out_features=5, bias=True)
+)
+this linear_layer successed
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 16, 62, 62]             448
+              ReLU-2           [-1, 16, 62, 62]               0
+            Conv2d-3            [-1, 8, 62, 62]             128
+            Conv2d-4           [-1, 12, 60, 60]             864
+            Conv2d-5           [-1, 32, 60, 60]             416
+              ReLU-6           [-1, 32, 60, 60]               0
+            Conv2d-7           [-1, 18, 60, 60]             576
+            Conv2d-8           [-1, 24, 58, 58]           3,888
+            Conv2d-9           [-1, 64, 58, 58]           1,600
+             ReLU-10           [-1, 64, 58, 58]               0
+AdaptiveAvgPool2d-11             [-1, 64, 5, 5]               0
+           Linear-12                    [-1, 5]           8,000
+           Linear-13                   [-1, 10]              60
+================================================================
+Total params: 15,980
+Trainable params: 15,980
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.05
+Forward/backward pass size (MB): 7.67
+Params size (MB): 0.06
+Estimated Total Size (MB): 7.78
+----------------------------------------------------------------
+-----------压缩模型精度--------------
+
+Test set: Average loss: 0.0268, Accuracy: 4586/10000 (46%)
+
+-----------微调训练精度--------------
+Train Epoch: 0 [0/50000 (0%)]	Loss: 1.344746
+
+Test set: Average loss: 0.0164, Accuracy: 6266/10000 (63%)
+
+Train Epoch: 1 [0/50000 (0%)]	Loss: 1.058827
+
+Test set: Average loss: 0.0156, Accuracy: 6441/10000 (64%)
+
+Train Epoch: 2 [0/50000 (0%)]	Loss: 0.996110
+
+Test set: Average loss: 0.0155, Accuracy: 6507/10000 (65%)
+
+Train Epoch: 3 [0/50000 (0%)]	Loss: 0.922915
+
+Test set: Average loss: 0.0153, Accuracy: 6512/10000 (65%)
+
+Train Epoch: 4 [0/50000 (0%)]	Loss: 0.810426
+
+Test set: Average loss: 0.0153, Accuracy: 6554/10000 (66%)
+
+Train Epoch: 5 [0/50000 (0%)]	Loss: 0.957579
+
+Test set: Average loss: 0.0151, Accuracy: 6640/10000 (66%)
+
+Train Epoch: 6 [0/50000 (0%)]	Loss: 0.704084
+
+Test set: Average loss: 0.0148, Accuracy: 6697/10000 (67%)
+
+Train Epoch: 7 [0/50000 (0%)]	Loss: 0.577667
+
+Test set: Average loss: 0.0143, Accuracy: 6792/10000 (68%)
+
+Train Epoch: 8 [0/50000 (0%)]	Loss: 0.816971
+
+Test set: Average loss: 0.0140, Accuracy: 6851/10000 (69%)
+
+Train Epoch: 9 [0/50000 (0%)]	Loss: 0.906033
+
+Test set: Average loss: 0.0139, Accuracy: 6901/10000 (69%)
+
+-----------微调验证精度--------------
+
+Test set: Average loss: 0.0139, Accuracy: 6901/10000 (69%)
